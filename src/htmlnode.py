@@ -28,7 +28,7 @@ class LeafNode(HTMLNode):
             if self.props == None:
                 return f"<{self.tag}>{self.value}</{self.tag}>"
             else:
-                return f"<{self.tag} {self.props}>{self.value}</{self.tag}>"
+                return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
             
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
@@ -41,4 +41,8 @@ class ParentNode(HTMLNode):
             raise ValueError("missing children")
         else:
             string = "".join(list(map(lambda x: x.to_html(), self.children)))
-            return f"<{self.tag}>{string}</{self.tag}>"
+
+            if self.props == None:
+                return f"<{self.tag}>{string}</{self.tag}>"
+            else:
+                return f"<{self.tag}{self.props_to_html()}>{string}</{self.tag}>"
